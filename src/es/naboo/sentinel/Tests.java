@@ -14,6 +14,7 @@ public class Tests {
         testNotNull();
         testOk();
         testNotOverflow();
+        testOutOfTime();
     }
 
     private static void testOk() throws InvalidKeyException, NoSuchAlgorithmException, TokenException {
@@ -42,13 +43,13 @@ public class Tests {
     }
 
 
-
-
-    private static void testTime() throws InvalidKeyException, NoSuchAlgorithmException, TokenException {
+    private static void testOutOfTime() throws InvalidKeyException, NoSuchAlgorithmException, TokenException {
         TokenService tokenService = new TokenService();
-        String token = tokenService.generateToken(SECRET, SIGNATURE_KEY);
-        System.out.println(token);
-        boolean verify = tokenService.verifyToken(token,SECRET,SIGNATURE_KEY,10);
-        System.out.println(verify);
+        String token = "MTU3MTEzMTIxOTAyMDo4NTkwOTBkZi03ZjFlLTQ5MGYtOGNjNi03YmUzMjFlMmNkZjY6MDdUQk5JbEJhVnArQW9CUElOU3ltTXViNldsUElOUWpEVEZmVUlZdFF0TT0=";
+        try{
+            boolean verify = tokenService.verifyToken(token,SECRET,SIGNATURE_KEY,10);
+        }catch(TokenException e) {
+            Logger.getLogger("tests").info(String.format("status: %s", e.getMessage()));
+        }
     }
 }
